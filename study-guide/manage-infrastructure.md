@@ -10,12 +10,12 @@
 ### Provider Configuration
 - Example provider configuration:
 
-'''
+```
 provider "google" {
   project = "acme-app"
   region  = "us-central1"
 }
-'''
+```
 
 - Terraform associates each resource type with a provider by taking the first word of the resource type name, so "google" is assumed to be the provider of the resource google_compute_instance
 
