@@ -8,7 +8,7 @@
 - Resource types belonging to the same provider share the same configuration, avoiding the need to repeat this information across every resource declaration.
 
 ### Provider Configuration
-- Example provider configuration:
+Example provider configuration:
 
 ```
 provider "google" {
