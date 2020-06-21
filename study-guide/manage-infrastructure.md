@@ -35,10 +35,9 @@ provider "google" {
 
 ### Plugin Names & Versions
 
-- The naming scheme for provider plugins is 'terraform-provider-<NAME>_vX.Y.Z' and Terraform uses the name to understand the version of a particular binary
+- The naming scheme for provider plugins is 'terraform-provider-<NAME>_vX.Y.Z' and Terraform uses the name to understand the version of a particular binary.
 
-
-## Terraform State
+## Terraform State
 
 ### Mapping to the Real World
 - Terraform needs some sort of database to map Terraform config to the real world. For example, Terraform would map "aws_instance" "foo" as i-abcd1234.
