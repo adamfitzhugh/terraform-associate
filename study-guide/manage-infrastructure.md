@@ -62,4 +62,34 @@ provider "google" {
 
 ## Terraform Settings
 
-### Terraform Block Syntax
+### Configuring a Terraform Backend
+- The Terraform backend defines where and how operations are performed, where state is stored etc.
+
+### Terraform Required Versions
+- You can use the 'required_version' setting to specify which versions of Terraform CLI can be used. If the version doesnt match, Terraform will produce an error.
+
+- Constraint operations are allowed to specify a version:
+
+```
+= (or no operator): exact version
+!=: version not equal
+>, >=, <, <=: version comparison
+~>: pessimistic constraint operator, constraining both oldest and newest version allowed. For example '~> 0.9' is equal to '>= 0.9', '< 1.0'
+```
+
+- Re-usable modules should constrain only the minimum allowed version, such as '>= 1.0.0'
+
+### Experimental Language Features
+- From time to time Terraform will introduce new features initially via an opt-in experiment so the community can try the new feature and give feedback
+
+- In releases where they are available, you can allow them on a per module basis by using the 'experiments' parameter, for example:
+
+```
+terraform {
+  experiments = [example]
+}
+```
+
+- Hashicorp do not recommend using experimental features in modules for production use.
+
+- When using experimental features a warning will appear on every 'terraform plan' & 'terraform apply'
