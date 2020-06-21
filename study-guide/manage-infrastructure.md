@@ -105,3 +105,5 @@ terraform {
 - Terraform only includes provisioners knowing there will always be certain behaviours that can't be represented in Terraform's declarative model.
 
 - This adds complexity. Terraform cannot model actions of provisioners in a plan/apply as it could in effect be any action. Also with successful provisioners, Terraform would need to understand direct network access to servers, and know the login credentials for the devices.
+
+https://www.terraform.io/docs/provisioners/#provisioners-are-a-last-resort
