@@ -72,8 +72,11 @@ provider "google" {
 
 ```
 = (or no operator): exact version
+
 !=: version not equal
+
 >, >=, <, <=: version comparison
+
 ~>: pessimistic constraint operator, constraining both oldest and newest version allowed. For example '~> 0.9' is equal to '>= 0.9', '< 1.0'
 ```
 
