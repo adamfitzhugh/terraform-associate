@@ -38,6 +38,7 @@ provider "google" {
 - The naming scheme for provider plugins is 'terraform-provider-<NAME>_vX.Y.Z' and Terraform uses the name to understand the version of a particular binary.
 
 
+
 ## Terraform State
 
 ### Mapping to the Real World
