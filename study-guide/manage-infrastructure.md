@@ -80,7 +80,7 @@ provider "google" {
 - Re-usable modules should constrain only the minimum allowed version, such as '>= 1.0.0'
 
 ### Experimental Language Features
-- From time to time Terraform will introduce new features initially via an opt-in experiment so the community can try the new feature and give feedback
+- From time to time Terraform will introduce new features initially via an opt-in experiment so the community can try the new feature and give feedback.
 
 - In releases where they are available, you can allow them on a per module basis by using the 'experiments' parameter, for example:
 
@@ -93,3 +93,12 @@ terraform {
 - Hashicorp do not recommend using experimental features in modules for production use.
 
 - When using experimental features a warning will appear on every 'terraform plan' & 'terraform apply'
+
+
+## Provisioners
+- Provisioners can be used to run specific actions on the local/remote machine in order to prepare servers or other infrastructure for production.
+
+### Provisioners are a Last Resort
+- Terraform only includes provisioners knowing there will always be certain behaviours that can't be represented in Terraform's declarative model.
+
+- This adds complexity. Terraform cannot model actions of provisioners in a plan/apply as it could in effect be any action. Also with successful provisioners, Terraform would need to understand direct network access to servers, and know the login credentials for the devices.
