@@ -106,4 +106,47 @@ terraform {
 
 - This adds complexity. Terraform cannot model actions of provisioners in a plan/apply as it could in effect be any action. Also with successful provisioners, Terraform would need to understand direct network access to servers, and know the login credentials for the devices.
 
-https://www.terraform.io/docs/provisioners/#provisioners-are-a-last-resort
+### Passing data to Virtual Machines
+- Terraform recommends passing this data in as metadata or using a defined cloud platform mechanism to pass in the data such as a start up script as part of the module
+
+- If the feature is unavailable, as a short-term offering you should use the local-exec provisioner.
+
+### The 'self' Object
+- Expressions in provisioner blocks cannot refer to the parent resource by name, they must use the 'self' object. For example, use 'self.public_ip' to reference an aws_instance IP.
+
+```
+resource "aws_instance" "web" {
+  # ...
+
+  provisioner "local-exec" {
+    command = "echo The server's IP address is ${self.private_ip}"
+  }
+}
+```
+
+### Creation-Time Provisioners
+- By default provisioners only run when the resource is created and not during an update or any other lifecycle.
+
+- If a creation-time provisioner fails, that resource is marked as tainted and will be planned for destruction and recreation upon the next 'terraform apply'.
+
+### Destroy-Time Provisioners
+- If 'when = destroy' is specified, the provisioner will run when the resource is being destroyed.
+
+```
+resource "aws_instance" "web" {
+  # ...
+
+  provisioner "local-exec" {
+    when    = "destroy"
+    command = "echo 'Destroy-time provisioner'"
+  }
+}
+```
+
+- If they fail, Terraform will error and rerunt he provisioners again on the next 'terraform apply'.
+
+### Multiple Provisioners
+- You can specify multiple provisioners within a resource. These are ran in the order they're defined in the configuration file.
+
+### Failure Behaviour
+- By default if a provisioner fails then Terraform will fail. This can be overridden by using the 'on_failure' setting. The allowed values are 'continue' (ignore the error and continue with the creation or destruction) and 'fail' (raise an error and stop the apply)
