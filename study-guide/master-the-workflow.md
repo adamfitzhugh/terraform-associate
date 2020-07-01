@@ -32,3 +32,41 @@ The core Terraform workflow has 3 steps:
 - In addition to reviewing a plan, the team can also decide when this change can happen. If they notice a certain change involves disruption, they may delay merging the pull request until they can schedule a maintenance window.
 
 ### Apply
+- With an apply it's important that the final concrete plan is reviewed as it may be different than the one reviewed on the pull request due to issues like merge order or infrastructure changes.
+
+- At this point the usual questions are asked. Is there a service outage with this change? Is any part of this change high risk? Should we be monitoring this change?
+
+
+## The Core Workflow Enhanced by Terraform Cloud
+While the above describes the typical workflow for an organisation, this can be streamlined by using tools such as Terraform Cloud.
+
+### Write
+- Terraform Cloud offers a centralised and secure location to store input variables and state by the writer creating a terraform backend piece of code.
+
+- Once the backend config is wrote, all that is required by the teams to use it is a Terraform Cloud API key.
+
+```
+$ terraform workspace select my-app-dev
+Switched to workspace "my-app-dev".
+
+$ terraform plan
+
+Running plan remotely in Terraform Enterprise.
+
+Output will stream here. To view this plan in a browser, visit:
+
+https://app.terraform.io/my-org/my-app-dev/.../
+
+Refreshing Terraform state in-memory prior to plan...
+
+# ...
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+```
+
+### Plan
+- Once a pull request is created and ready to be reviewed, Terraform Cloud automatically runs a plan along with status updates of the plan.
+
+- Once the plan is complete, the status update indicates whether there were any changes in the plan right from the pull request. A teammate can then review this request by viewing the raw log and then approve the change.
+
+- Once the plan has been approved, Terraform Cloud performs the apply.
