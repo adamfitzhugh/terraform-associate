@@ -58,4 +58,7 @@
 - Remember if you switch workspaces, when running a 'terraform plan', Terraform will not see any existing resources that existed in the other workspaces.
 
 ### Current Workspace Interpolation
+- You are able to specify the name of the current workspace using the '${terraform.workspace} interpolation sequence. You should NOT use this though for remote operations against Terraform Cloud workspaces.
+
+### When to use Multiple Workspaces
 - 
