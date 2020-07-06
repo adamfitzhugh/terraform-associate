@@ -41,6 +41,11 @@
 ### command: import
 - Used to import existing resoures into Terraform
 
+### command: refresh
+- Used to reconcile the state Terraform knows about (via the state file) with real-world infrastructure. This can help detect any drift from the last known state.
+
+- This does not modify infrastructure but can modify the state file itself.
+
 
 ## Terraform Workspaces
 - Each Terraform config has an associated backend which defines how operations are executed and where state is stored. The persistent data stored in the backend belongs to a specific workspace.
@@ -61,4 +66,17 @@
 - You are able to specify the name of the current workspace using the '${terraform.workspace} interpolation sequence. You should NOT use this though for remote operations against Terraform Cloud workspaces.
 
 ### When to use Multiple Workspaces
-- 
+- Named workspaces allow for switching between multiple instances of a single configuration within a single backend. 
+
+- A common use for workspaces is to create a parallel, distinct copy of a set of infrastructure in order to test changes before deploying in production.
+
+- Non-default branches are often related to feature branches in version control. A developer may create a corresponding workspace to deploy into a temporary copy of the main infrastructure so that changes can be tested without affecting production.
+
+- Named workspaces are not suitable for an isolation mechanism between production and staging environments. Instead, using re-useable modules to represent common elements. Using this method allows the backend configuration to only consist of a small number of module blocks.
+
+### Workspace Internals
+- Workspaces are technically equivalent to renaming your state file. Terraform wraps this up with a set of protections and support for remote state.
+
+- Terraform stores the workspaces state in a directory called terraform.tfstate.d - the equivalent of the terraform.tfstate file for local-only deployments.
+
+- For remote state, the workspaces are stored directly in the configured backend.
